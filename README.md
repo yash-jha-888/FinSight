@@ -22,7 +22,11 @@ Track income and expenses, group them into categories, set monthly budgets, and 
 | **Insights** | **Dark mode** |
 | ![Insights](docs/screenshots/insights.png) | ![Dark mode](docs/screenshots/overview-dark.png) |
 
-## Running
+## Download
+
+Windows builds are on the [Releases page](../../releases), with Java bundled in, so there's nothing else to install. Get the `setup.exe` installer, or the portable `.zip` and run `FinSight.exe`. Windows may warn that the app is unsigned; click **More info**, then **Run anyway**.
+
+## Running from source
 
 You need **JDK 21**. Maven is optional, since the repo includes the Maven wrapper.
 
@@ -32,6 +36,8 @@ You need **JDK 21**. Maven is optional, since the repo includes the Maven wrappe
 ./mvnw package             # build target/finsight.jar
 java -jar target/finsight.jar
 ```
+
+Windows executables are built by the [Release workflow](.github/workflows/release.yml) whenever a `v*` tag is pushed. It uses `jpackage` to bundle a trimmed Java runtime with the app.
 
 Data is stored in `~/.finsight/finsight.db`. To start fresh, delete that file. To use another file, run with `--db=path/to/file.db`.
 

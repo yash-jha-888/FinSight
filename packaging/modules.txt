@@ -1,0 +1,1 @@
+java.base,java.desktop,java.logging,java.naming,java.scripting,java.sql,java.xml,jdk.unsupported,jdk.localedata,jdk.crypto.ec,jdk.jsobject,jdk.xml.dom
