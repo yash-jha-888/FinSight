@@ -4,7 +4,7 @@ A personal finance manager for the desktop, built with **Java 21**, **JavaFX** a
 
 Track income and expenses, group them into categories, set monthly budgets per category, and see where the money goes through summaries, charts and budget alerts.
 
-> Status: in progress. The domain model and alert engine are done; storage and the interface are next.
+> Status: in progress. The domain model, alert engine and SQLite storage are done; the interface is next.
 
 ## Features
 
@@ -43,6 +43,7 @@ src/main/java/com/finsight
 | Abstraction | `Transaction` is abstract; `BudgetAlertRule.evaluate()` is a template method whose steps subclasses fill in |
 | Polymorphism | `getSignedAmount()` returns `+amount` for income and `-amount` for expenses, so a mixed list sums to the balance; `AlertEngine` calls each `AlertRule` without knowing its type |
 | Interfaces | `Identifiable`, `Repository<T>`, `AlertRule`, plus `Comparable<Transaction>` |
+| Generics and inheritance in the data layer | `JdbcRepository<T>` implements find, list and delete once; `CategoryRepository`, `TransactionRepository` and `BudgetRepository` extend it and supply only their SQL and row mapping |
 
 ```mermaid
 classDiagram
@@ -89,6 +90,10 @@ classDiagram
     BudgetAlertRule <|-- ThresholdRule
     BudgetAlertRule <|-- PaceRule
 ```
+
+## Database
+
+Data is stored in SQLite at `~/.finsight/finsight.db`, created on first launch with a few months of demo data. The schema uses foreign keys, `CHECK` constraints, triggers and views; see [docs/database.md](docs/database.md) for the ER diagram, design decisions and example queries.
 
 ## License
 
