@@ -109,6 +109,29 @@ public class FinanceService {
         }
     }
 
+    /** Spending per payment method for a month, largest first. */
+    public java.util.Map<com.finsight.model.PaymentMethod, BigDecimal> spendingByPaymentMethod(YearMonth month) {
+        String sql = """
+                SELECT e.payment_method, SUM(t.amount_cents)
+                FROM txn t
+                JOIN expense_detail e ON e.txn_id = t.txn_id
+                WHERE substr(t.txn_date, 1, 7) = ?
+                GROUP BY e.payment_method
+                ORDER BY SUM(t.amount_cents) DESC""";
+        try (var ps = db.connection().prepareStatement(sql)) {
+            ps.setString(1, month.toString());
+            try (var rs = ps.executeQuery()) {
+                var result = new java.util.LinkedHashMap<com.finsight.model.PaymentMethod, BigDecimal>();
+                while (rs.next()) {
+                    result.put(com.finsight.model.PaymentMethod.valueOf(rs.getString(1)), cents(rs.getLong(2)));
+                }
+                return result;
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Could not load payment methods", e);
+        }
+    }
+
     /** Overall balance: all income minus all expenses ever recorded. */
     public BigDecimal balance() {
         try (var st = db.connection().createStatement();

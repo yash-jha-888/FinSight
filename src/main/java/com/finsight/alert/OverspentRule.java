@@ -20,6 +20,7 @@ public class OverspentRule extends BudgetAlertRule {
     @Override
     protected String message(BudgetStatus status) {
         var over = status.spent().subtract(status.budget().getLimit());
-        return "Spent " + status.spent() + " of " + status.budget().getLimit() + ", which is " + over + " over.";
+        return "Spent " + money(status.spent()) + " of " + money(status.budget().getLimit()) + ", which is "
+                + money(over) + " over.";
     }
 }

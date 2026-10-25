@@ -31,6 +31,12 @@ public abstract class BudgetAlertRule implements AlertRule {
 
     protected abstract String message(BudgetStatus status);
 
+    protected static String money(java.math.BigDecimal amount) {
+        var f = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.of("en", "IN"));
+        f.setMaximumFractionDigits(0);
+        return f.format(amount.setScale(0, java.math.RoundingMode.HALF_UP));
+    }
+
     protected static String percent(double fraction) {
         return Math.round(fraction * 100) + "%";
     }

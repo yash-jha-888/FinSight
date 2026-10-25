@@ -40,7 +40,7 @@ class AlertEngineTest {
         var alerts = alertsFor("1250", 25);
         assertEquals(1, alerts.size());
         assertEquals(Severity.CRITICAL, alerts.get(0).severity());
-        assertTrue(alerts.get(0).message().contains("250.00 over"));
+        assertTrue(alerts.get(0).message().contains("₹250 over"));
     }
 
     @Test

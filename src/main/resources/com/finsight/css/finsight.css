@@ -1,0 +1,562 @@
+/*
+ * FinSight theme.
+ *
+ * The look borrows from printed financial reports rather than web dashboards:
+ * warm paper, ink-coloured type, a serif for headline figures, hairline rules
+ * instead of shadowed cards, and one green accent. Category colours carry the
+ * charts, so the chrome stays quiet.
+ *
+ * Every colour is a looked-up variable on .root, so dark mode only has to
+ * redefine the palette (.root.dark at the bottom).
+ */
+
+.root {
+    -fs-paper:       #F3EFE6;
+    -fs-sidebar:     #ECE6DA;
+    -fs-surface:     #FBF9F4;
+    -fs-ink:         #1E2321;
+    -fs-ink-2:       #4A4F4B;
+    -fs-muted:       #8A8B83;
+    -fs-rule:        #D8D1C3;
+    -fs-rule-strong: #1E2321;
+    -fs-accent:      #2E5E4E;
+    -fs-accent-ink:  #F3EFE6;
+    -fs-accent-soft: #DCE5DD;
+    -fs-positive:    #2E6B4F;
+    -fs-negative:    #A4452C;
+    -fs-warning:     #A87A22;
+    -fs-hover:       rgba(30, 35, 33, 0.05);
+    -fs-selected:    rgba(46, 94, 78, 0.10);
+
+    -fx-base: -fs-paper;
+    -fx-background: -fs-paper;
+    -fx-control-inner-background: -fs-surface;
+    -fx-accent: -fs-accent;
+    -fx-focus-color: -fs-accent;
+    -fx-faint-focus-color: transparent;
+    -fx-text-base-color: -fs-ink;
+    -fx-text-background-color: -fs-ink;
+    -fx-selection-bar: -fs-selected;
+    -fx-selection-bar-non-focused: -fs-selected;
+    -fx-selection-bar-text: -fs-ink;
+
+    -fx-font-family: "IBM Plex Sans";
+    -fx-font-size: 13.5px;
+    -fx-background-color: -fs-paper;
+}
+
+/* ---------- Type helpers ---------- */
+
+.label { -fx-text-fill: -fs-ink; }
+.muted, .muted .label { -fx-text-fill: -fs-muted; }
+.positive { -fx-text-fill: -fs-positive; }
+.negative { -fx-text-fill: -fs-negative; }
+.warning  { -fx-text-fill: -fs-warning; }
+.num {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 13px;
+}
+.hint {
+    -fx-text-fill: -fs-muted;
+    -fx-font-size: 12px;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+    -fx-background-color: -fs-sidebar;
+    -fx-border-color: transparent -fs-rule transparent transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-pref-width: 232px;
+    -fx-padding: 36 20 28 20;
+}
+.brand { -fx-padding: 0 12 40 12; }
+.wordmark {
+    -fx-font-family: "IBM Plex Serif Medm";
+    -fx-font-size: 26px;
+    -fx-text-fill: -fs-ink;
+}
+.tagline {
+    -fx-font-family: "IBM Plex Serif Light";
+    -fx-font-style: italic;
+    -fx-font-size: 13px;
+    -fx-text-fill: -fs-muted;
+}
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 10 12 10 12;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 0 0 0 2;
+}
+.nav-item:hover { -fx-background-color: -fs-hover; }
+.nav-item:selected {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent transparent -fs-accent;
+}
+.nav-number {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 11px;
+    -fx-text-fill: -fs-muted;
+}
+.nav-name {
+    -fx-font-size: 14.5px;
+    -fx-text-fill: -fs-ink-2;
+}
+.nav-item:selected .nav-name {
+    -fx-font-family: "IBM Plex Sans Medm";
+    -fx-text-fill: -fs-ink;
+}
+.nav-item:selected .nav-number { -fx-text-fill: -fs-accent; }
+.sidebar-footer { -fx-padding: 0 12 0 12; }
+.theme-toggle {
+    -fx-background-color: transparent;
+    -fx-border-color: -fs-rule;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 6 12 6 12;
+    -fx-text-fill: -fs-ink-2;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+.theme-toggle:hover { -fx-background-color: -fs-hover; }
+.shortcut {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 11px;
+    -fx-text-fill: -fs-muted;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+    -fx-padding: 32 48 24 48;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+}
+.page-title {
+    -fx-font-family: "IBM Plex Serif Light";
+    -fx-font-size: 34px;
+    -fx-text-fill: -fs-ink;
+}
+.page-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fs-muted;
+}
+.month-label {
+    -fx-font-family: "IBM Plex Sans Medm";
+    -fx-font-size: 14px;
+    -fx-min-width: 128px;
+    -fx-alignment: center;
+}
+.month-arrow {
+    -fx-background-color: transparent;
+    -fx-border-color: -fs-rule;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-size: 16px;
+    -fx-padding: 0 10 2 10;
+    -fx-text-fill: -fs-ink;
+    -fx-cursor: hand;
+}
+.month-arrow:hover { -fx-background-color: -fs-hover; }
+
+/* ---------- Buttons ---------- */
+
+.button {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+.button.primary {
+    -fx-background-color: -fs-accent;
+    -fx-text-fill: -fs-accent-ink;
+    -fx-font-family: "IBM Plex Sans Medm";
+    -fx-padding: 9 18 9 18;
+}
+.button.primary:hover { -fx-opacity: 0.9; }
+.button.secondary {
+    -fx-background-color: transparent;
+    -fx-border-color: -fs-rule-strong;
+    -fx-border-width: 1;
+    -fx-text-fill: -fs-ink;
+    -fx-padding: 5 12 5 12;
+}
+.button.secondary:hover { -fx-background-color: -fs-hover; }
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fs-accent;
+    -fx-padding: 4 6 4 6;
+    -fx-underline: false;
+}
+.link-button:hover { -fx-underline: true; }
+.link-button.danger { -fx-text-fill: -fs-negative; }
+
+/* Segmented control made of toggle buttons */
+.segmented .toggle-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-color: -fs-rule;
+    -fx-border-width: 1 0 1 1;
+    -fx-padding: 6 14 6 14;
+    -fx-text-fill: -fs-ink-2;
+    -fx-cursor: hand;
+}
+.segmented .toggle-button.last { -fx-border-width: 1; }
+.segmented .toggle-button:selected {
+    -fx-background-color: -fs-ink;
+    -fx-text-fill: -fs-paper;
+    -fx-border-color: -fs-ink;
+}
+
+/* ---------- Pages ---------- */
+
+.page-scroll, .page-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: -fs-paper;
+}
+.page-scroll { -fx-padding: 0; }
+.page { -fx-padding: 32 48 48 48; }
+.page-fill { -fx-padding: 28 48 28 48; }
+
+.section-header {
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 10 0;
+    -fx-border-color: transparent transparent -fs-rule-strong transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-height: 36px;
+}
+.section-title {
+    -fx-font-family: "IBM Plex Sans SmBld";
+    -fx-font-size: 11px;
+    -fx-text-fill: -fs-ink;
+}
+.section > .section-header { -fx-padding: 0 0 8 0; }
+.section { -fx-spacing: 18; }
+
+/* ---------- Figures ---------- */
+
+.figure-caption {
+    -fx-font-family: "IBM Plex Sans Medm";
+    -fx-font-size: 11px;
+    -fx-text-fill: -fs-muted;
+}
+.figure-value-lg {
+    -fx-font-family: "IBM Plex Serif Light";
+    -fx-font-size: 58px;
+    -fx-padding: -4 0 0 -2;
+}
+.figure-value-md {
+    -fx-font-family: "IBM Plex Serif";
+    -fx-font-size: 24px;
+}
+.figure-note {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: -fs-muted;
+}
+.figure-row {
+    -fx-border-color: -fs-rule transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 18 0 0 0;
+    -fx-spacing: 22;
+}
+.vrule {
+    -fx-min-width: 1px;
+    -fx-max-width: 1px;
+    -fx-background-color: -fs-rule;
+}
+
+/* ---------- Alerts ---------- */
+
+.alert-row {
+    -fx-padding: 12 0 12 14;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+}
+.alert-title { -fx-font-family: "IBM Plex Sans Medm"; -fx-font-size: 14px; }
+.alert-message { -fx-text-fill: -fs-ink-2; -fx-font-size: 12.5px; }
+.alert-critical { -fx-border-color: transparent transparent -fs-rule -fs-negative; -fx-border-width: 0 0 1 3; }
+.alert-warning  { -fx-border-color: transparent transparent -fs-rule -fs-warning;  -fx-border-width: 0 0 1 3; }
+.alert-info     { -fx-border-color: transparent transparent -fs-rule -fs-muted;    -fx-border-width: 0 0 1 3; }
+.alert-critical .alert-title { -fx-text-fill: -fs-negative; }
+.alert-empty { -fx-padding: 12 0 0 0; }
+
+/* ---------- Legends and chart notes ---------- */
+
+.legend {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: -fs-muted;
+    -fx-graphic-text-gap: 6;
+}
+.legend-current  { -fx-border-color: transparent transparent transparent -fs-accent; -fx-border-width: 0 0 0 10; -fx-padding: 0 0 0 6; -fx-border-insets: 6 0 6 0; }
+.legend-previous { -fx-border-color: transparent transparent transparent -fs-muted;  -fx-border-width: 0 0 0 10; -fx-padding: 0 0 0 6; -fx-border-insets: 6 0 6 0; }
+.legend-income   { -fx-border-color: transparent transparent transparent -fs-rule;   -fx-border-width: 0 0 0 10; -fx-padding: 0 0 0 6; -fx-border-insets: 3 0 3 0; }
+.legend-expense  { -fx-border-color: transparent transparent transparent -fs-ink;    -fx-border-width: 0 0 0 10; -fx-padding: 0 0 0 6; -fx-border-insets: 3 0 3 0; }
+.chart-note {
+    -fx-font-family: "IBM Plex Serif Light";
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+    -fx-text-fill: -fs-ink-2;
+}
+
+/* ---------- Spend curve (LineChart) ---------- */
+
+.spend-curve { -fx-padding: 0; }
+.spend-curve .chart-plot-background { -fx-background-color: transparent; }
+.spend-curve .chart-horizontal-grid-lines { -fx-stroke: -fs-rule; -fx-stroke-dash-array: 2 4; }
+.spend-curve .axis {
+    -fx-tick-label-fill: -fs-muted;
+    -fx-tick-label-font-family: "IBM Plex Mono";
+    -fx-tick-label-font-size: 11px;
+}
+.spend-curve .axis:left { -fx-border-color: transparent; }
+.spend-curve .axis:bottom { -fx-border-color: -fs-rule-strong transparent transparent transparent; }
+.spend-curve .series-current { -fx-stroke: -fs-accent; -fx-stroke-width: 2.25px; }
+.spend-curve .series-previous { -fx-stroke: -fs-muted; -fx-stroke-width: 1.25px; -fx-stroke-dash-array: 4 4; }
+
+/* ---------- Category bars ---------- */
+
+.bar-label { -fx-font-size: 13.5px; }
+
+/* ---------- Trend bars ---------- */
+
+.trend-income { -fx-background-color: -fs-rule; }
+.trend-expense.past { -fx-background-color: -fs-ink-2; }
+.trend-expense.current { -fx-background-color: -fs-ink; }
+.trend-baseline { -fx-stroke: -fs-rule-strong; }
+.trend-label { -fx-font-size: 12px; -fx-text-fill: -fs-muted; }
+.trend-label.current { -fx-font-family: "IBM Plex Sans Medm"; -fx-text-fill: -fs-ink; }
+.trend-net { -fx-font-family: "IBM Plex Mono"; -fx-font-size: 11px; }
+
+/* ---------- Meter ---------- */
+
+.meter { -fx-background-color: -fs-rule; }
+.meter-ok   { -fx-background-color: -fs-accent; }
+.meter-warn { -fx-background-color: -fs-warning; }
+.meter-over { -fx-background-color: -fs-negative; }
+.meter-marker { -fx-background-color: -fs-ink; }
+.meter-neutral .meter-fill { -fx-background-color: -fs-ink-2; }
+
+/* ---------- Budgets ---------- */
+
+.budget-summary { -fx-max-width: 640px; }
+.budget-total {
+    -fx-font-family: "IBM Plex Serif Light";
+    -fx-font-size: 30px;
+}
+.budget-cell {
+    -fx-padding: 16 24 16 0;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-height: 56px;
+}
+.row-name { -fx-font-size: 14px; }
+.plain-row {
+    -fx-padding: 12 0 12 0;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* ---------- Insights ---------- */
+
+.insight {
+    -fx-padding: 22 0 22 0;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+}
+.insight-number {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 12px;
+    -fx-text-fill: -fs-muted;
+    -fx-padding: 6 0 0 0;
+    -fx-min-width: 24px;
+}
+.insight-headline {
+    -fx-font-family: "IBM Plex Serif";
+    -fx-font-size: 22px;
+}
+.insight-detail { -fx-text-fill: -fs-ink-2; }
+.tone-positive .insight-number { -fx-text-fill: -fs-positive; }
+.tone-negative .insight-number { -fx-text-fill: -fs-negative; }
+
+/* ---------- Ledger table ---------- */
+
+.toolbar { -fx-padding: 0; }
+.ledger-totals {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 12px;
+    -fx-text-fill: -fs-ink-2;
+}
+.text-field, .combo-box, .date-picker, .color-picker {
+    -fx-background-color: -fs-surface;
+    -fx-background-radius: 0;
+    -fx-border-color: -fs-rule;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-text-fill: -fs-ink;
+    -fx-prompt-text-fill: -fs-muted;
+    -fx-padding: 6 10 6 10;
+}
+.combo-box, .date-picker, .color-picker { -fx-padding: 1 2 1 2; }
+.date-picker .text-field { -fx-border-width: 0; -fx-padding: 5 8 5 8; }
+.text-field:focused, .combo-box:focused, .date-picker:focused { -fx-border-color: -fs-accent; }
+.combo-box .arrow-button, .date-picker .arrow-button { -fx-background-color: transparent; }
+.combo-box .arrow, .date-picker .arrow { -fx-background-color: -fs-ink-2; }
+.combo-box-popup .list-view {
+    -fx-background-color: -fs-surface;
+    -fx-border-color: -fs-rule;
+}
+.combo-box-popup .list-cell { -fx-background-color: -fs-surface; -fx-text-fill: -fs-ink; -fx-padding: 6 10 6 10; }
+.combo-box-popup .list-cell:hover { -fx-background-color: -fs-selected; }
+.search { -fx-pref-width: 340px; }
+
+.table-view.ledger {
+    -fx-background-color: transparent;
+    -fx-border-color: -fs-rule-strong transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 0;
+    -fx-table-cell-border-color: transparent;
+}
+.ledger .column-header-background { -fx-background-color: transparent; }
+.ledger .column-header-background .filler { -fx-background-color: transparent; }
+.ledger .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10 0 10 0;
+}
+.ledger .column-header .label {
+    -fx-font-family: "IBM Plex Sans Medm";
+    -fx-font-size: 11px;
+    -fx-text-fill: -fs-muted;
+    -fx-alignment: center-left;
+}
+.ledger .amount-column.column-header .label { -fx-alignment: center-right; }
+.ledger .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent -fs-rule transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-cell-size: 46px;
+}
+.ledger .table-row-cell:hover { -fx-background-color: -fs-hover; }
+.ledger .table-row-cell:selected { -fx-background-color: -fs-selected; }
+.ledger .table-cell {
+    -fx-text-fill: -fs-ink;
+    -fx-padding: 0 12 0 0;
+    -fx-alignment: center-left;
+}
+.ledger .muted-column.table-cell { -fx-text-fill: -fs-muted; }
+.ledger .amount-column.table-cell {
+    -fx-alignment: center-right;
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 13.5px;
+    -fx-padding: 0 4 0 0;
+}
+.ledger .amount-column.table-cell.positive { -fx-text-fill: -fs-positive; }
+.ledger .amount-column.table-cell.negative { -fx-text-fill: -fs-ink; }
+.cell-primary { -fx-font-size: 13.5px; }
+.cell-secondary { -fx-font-size: 12px; -fx-text-fill: -fs-muted; }
+.ledger .placeholder .label { -fx-text-fill: -fs-muted; }
+.table-view .scroll-bar, .page-scroll .scroll-bar { -fx-background-color: transparent; }
+
+/* Thin, quiet scroll bars */
+.scroll-bar { -fx-background-color: transparent; -fx-pref-width: 10; -fx-pref-height: 10; }
+.scroll-bar .thumb { -fx-background-color: -fs-rule; -fx-background-radius: 5; -fx-background-insets: 2; }
+.scroll-bar .increment-button, .scroll-bar .decrement-button { -fx-padding: 0; -fx-shape: ""; }
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow { -fx-padding: 0; -fx-shape: ""; }
+.scroll-bar .track, .scroll-bar .track-background { -fx-background-color: transparent; }
+
+/* ---------- Context menu, tooltip ---------- */
+
+.context-menu {
+    -fx-background-color: -fs-surface;
+    -fx-border-color: -fs-rule;
+    -fx-background-radius: 0;
+    -fx-padding: 4;
+}
+.context-menu .menu-item:focused { -fx-background-color: -fs-selected; }
+.context-menu .menu-item .label { -fx-text-fill: -fs-ink; }
+.tooltip {
+    -fx-background-color: -fs-ink;
+    -fx-text-fill: -fs-paper;
+    -fx-background-radius: 0;
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 12px;
+}
+
+/* ---------- Dialogs ---------- */
+
+.dialog-pane {
+    -fx-background-color: -fs-paper;
+    -fx-padding: 0;
+}
+.dialog-pane > .content { -fx-padding: 28 32 8 32; }
+.dialog-pane > .button-bar > .container {
+    -fx-padding: 14 32 24 32;
+}
+.dialog-pane .button {
+    -fx-background-color: transparent;
+    -fx-border-color: -fs-rule;
+    -fx-text-fill: -fs-ink;
+    -fx-padding: 7 16 7 16;
+}
+.dialog-pane .button.primary, .dialog-pane .button:default {
+    -fx-background-color: -fs-accent;
+    -fx-border-color: -fs-accent;
+    -fx-text-fill: -fs-accent-ink;
+}
+.dialog-title {
+    -fx-font-family: "IBM Plex Serif Light";
+    -fx-font-size: 26px;
+}
+.form-dialog { -fx-min-width: 460px; }
+.form-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fs-muted;
+    -fx-min-width: 90px;
+}
+.form .text-field, .form .combo-box, .form .date-picker, .form .color-picker { -fx-pref-width: 300px; }
+.amount-field {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 16px;
+}
+.form-error { -fx-text-fill: -fs-negative; -fx-font-size: 12.5px; }
+
+/* Date picker popup */
+.date-picker-popup {
+    -fx-background-color: -fs-surface;
+    -fx-border-color: -fs-rule;
+}
+.date-picker-popup .month-year-pane { -fx-background-color: -fs-surface; }
+.date-picker-popup .spinner .label { -fx-text-fill: -fs-ink; }
+.date-picker-popup .day-cell { -fx-background-color: transparent; -fx-text-fill: -fs-ink; }
+.date-picker-popup .day-cell:hover { -fx-background-color: -fs-selected; }
+.date-picker-popup .selected { -fx-background-color: -fs-accent; -fx-text-fill: -fs-accent-ink; }
+.date-picker-popup .today { -fx-border-color: -fs-accent; -fx-border-width: 1; }
+.date-picker-popup .previous-month, .date-picker-popup .next-month { -fx-text-fill: -fs-muted; }
+.date-picker-popup .day-name-cell { -fx-text-fill: -fs-muted; }
+
+/* ==================== Dark mode ==================== */
+
+.root.dark {
+    -fs-paper:       #151816;
+    -fs-sidebar:     #111412;
+    -fs-surface:     #1C201E;
+    -fs-ink:         #ECE7DC;
+    -fs-ink-2:       #B9B5AC;
+    -fs-muted:       #7D817B;
+    -fs-rule:        #2D322F;
+    -fs-rule-strong: #8C8F88;
+    -fs-accent:      #84BBA2;
+    -fs-accent-ink:  #111412;
+    -fs-accent-soft: #24332C;
+    -fs-positive:    #84BBA2;
+    -fs-negative:    #E08A6D;
+    -fs-warning:     #D6AE5E;
+    -fs-hover:       rgba(236, 231, 220, 0.05);
+    -fs-selected:    rgba(132, 187, 162, 0.14);
+}

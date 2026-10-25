@@ -30,6 +30,6 @@ public class ThresholdRule extends BudgetAlertRule {
 
     @Override
     protected String message(BudgetStatus status) {
-        return status.budget().remaining(status.spent()) + " left for the rest of the month.";
+        return money(status.budget().remaining(status.spent())) + " left for the rest of the month.";
     }
 }
