@@ -37,7 +37,7 @@ You need **JDK 21**. Maven is optional, since the repo includes the Maven wrappe
 java -jar target/finsight.jar
 ```
 
-Windows executables are built by the [Release workflow](.github/workflows/release.yml) whenever a `v*` tag is pushed. It uses `jpackage` to bundle a trimmed Java runtime with the app.
+Windows executables are built by the [Release workflow](.github/workflows/release.yml): run it from the Actions tab with a version number, or push a `v*` tag. It uses `jpackage` to bundle a trimmed Java runtime with the app.
 
 Data is stored in `~/.finsight/finsight.db`. To start fresh, delete that file. To use another file, run with `--db=path/to/file.db`.
 
