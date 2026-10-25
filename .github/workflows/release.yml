@@ -70,13 +70,17 @@ jobs:
         id: wix
         continue-on-error: true
         shell: pwsh
-        run: choco install wixtoolset --version 3.14.1 -y --no-progress
+        run: |
+          # Runner images usually ship WiX 3; install it only if missing.
+          if (-not (Test-Path "C:\Program Files (x86)\WiX Toolset v3*\bin\candle.exe")) {
+            choco install wixtoolset -y --no-progress
+          }
 
       - name: Package installer
         if: steps.wix.outcome == 'success'
         continue-on-error: true
         run: |
-          export PATH="$PATH:/c/Program Files (x86)/WiX Toolset v3.14/bin"
+          for d in "/c/Program Files (x86)"/WiX\ Toolset\ v3*/bin; do export PATH="$PATH:$d"; done
           jpackage --type exe \
             --name FinSight \
             --app-image target/dist/FinSight \
